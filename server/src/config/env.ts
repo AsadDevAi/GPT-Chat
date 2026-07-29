@@ -26,5 +26,6 @@ export const env = {
   port: parseInt(process.env.PORT || '5000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
   fromEmail: process.env.FROM_EMAIL || 'noreply@yourdomain.com',
+  senderEmail: process.env.SENDER_EMAIL || 'asadbekyusupov714@gmail.com',
   groqModel: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
 };

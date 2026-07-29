@@ -41,7 +41,7 @@ export async function registerUser(
     isVerified: false,
   });
 
-  await sendVerificationEmail(user.email, user.name, verificationToken);
+  await sendVerificationEmail(user.email, verificationToken);
 
   return user;
 }
@@ -117,7 +117,7 @@ export async function initiatePasswordReset(email: string): Promise<void> {
   user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000);
   await user.save();
 
-  await sendPasswordResetEmail(user.email, user.name, resetToken);
+  await sendPasswordResetEmail(user.email, resetToken);
 }
 
 export async function resetPassword(
