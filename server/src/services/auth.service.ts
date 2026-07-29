@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { User, IUser } from '../models/User';
 import { env } from '../config/env';
 import { sendVerificationEmail, sendPasswordResetEmail } from './email.service';
@@ -31,7 +31,7 @@ export async function registerUser(
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
-  const verificationToken = uuidv4();
+  const verificationToken = randomUUID();
 
   const user = await User.create({
     name,
@@ -112,7 +112,7 @@ export async function initiatePasswordReset(email: string): Promise<void> {
     return;
   }
 
-  const resetToken = uuidv4();
+  const resetToken = randomUUID();
   user.resetPasswordToken = resetToken;
   user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000);
   await user.save();
