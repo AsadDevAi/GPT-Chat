@@ -21,7 +21,7 @@ import { env } from '../config/env';
 const REFRESH_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.nodeEnv === 'production',
-  sameSite: 'strict' as const,
+  sameSite: (env.nodeEnv === 'production' ? 'none' : 'lax') as 'none' | 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000,
   path: '/',
 };
@@ -98,7 +98,11 @@ export async function logout(
   _req: Request,
   res: Response
 ): Promise<void> {
-  res.clearCookie('refreshToken', { path: '/' });
+  res.clearCookie('refreshToken', { 
+    path: '/',
+    secure: env.nodeEnv === 'production',
+    sameSite: (env.nodeEnv === 'production' ? 'none' : 'lax') as 'none' | 'lax'
+  });
   res.json({ message: 'Logged out successfully' });
 }
 
