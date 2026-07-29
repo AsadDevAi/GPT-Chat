@@ -1,3 +1,8 @@
+import crypto from 'node:crypto';
+if (!globalThis.crypto) {
+  (globalThis as any).crypto = crypto;
+}
+
 import dns from 'node:dns';
 dns.setDefaultResultOrder('ipv4first');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
